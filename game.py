@@ -56,3 +56,19 @@ class Cat:
                 self.move_down = False
                 
 # ============================================================
+
+
+# 線とドットの親クラス
+class Rope:
+    def __init__(self, x=0, y=0, velocity=0, tilt=0, color=0):
+        self.x = 0
+        self.y = 0
+        self.velocity = velocity
+        self.tilt = tilt
+        self.color = color
+    def update(self):
+        return
+    def judge(self, Cat):
+        return
+
+# ============================================================
