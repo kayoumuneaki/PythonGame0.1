@@ -56,3 +56,47 @@ class Cat:
                 self.move_down = False
                 
 # ============================================================
+
+
+
+# 垂直の線
+class Straight_Rope(Rope):
+    def update(self):
+        if(self.x > 635):
+            self.direction = "LEFT"
+        elif(self.x < 5):
+            self.direction = "RIGHT"
+        if(self.direction == "RIGHT"):
+            self.x += self.velocity
+        elif(self.direction == "LEFT"):
+            self.x -= self.velocity
+        pygame.draw.line(screen, COLORS[3], [self.x, 0], [self.x, 480], 5)
+        
+    # プレイヤーとぶつかったか判定
+    def judge(self, Cat):
+        if(self.x > (Cat.x) and self.x < (Cat.x + 20)):
+            return True
+        else:
+            return False
+        
+# 水平の線
+class Straight_Rope_Horizontal(Rope):
+    def update(self):
+        if(self.y > 475):
+            self.direction = "DOWN"
+        elif(self.y < 5):
+            self.direction = "UP"
+        if(self.direction == "DOWN"):
+            self.y -= self.velocity
+        elif(self.direction == "UP"):
+            self.y += self.velocity
+        pygame.draw.line(screen, COLORS[3],[0, self.y], [640, self.y], 5)
+        
+    # プレイヤーとぶつかったか判定
+    def judge(self, Cat):
+        if(self.y > (Cat.y) and self.y < (Cat.y + 20)):
+            return True
+        else:
+            return False
+        
+# ========================================================
