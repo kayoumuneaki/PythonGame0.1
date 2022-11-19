@@ -58,6 +58,22 @@ class Cat:
 # ============================================================
 
 
+#線とドットの親クラス
+class Rope:
+    def __init__(self,x=0,y=0,velocity=0,tilt=0,color=0):
+        self.x = x
+        self.y = y
+        self.velocity = velocity
+        self.tilt = tilt
+        self.color = color
+    def update(self):
+        return
+    def judge(self,octo_cat):
+        return
+    
+# =============================================================
+
+
 
 # 垂直の線
 class Straight_Rope(Rope):
