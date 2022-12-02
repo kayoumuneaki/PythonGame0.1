@@ -241,3 +241,5 @@ def quit(score):
         save_data = np.array([str(datetime.datetime.today()), str(score)])
         np.savetxt('score/score.tsv',save_data, delimiter=',', fmt="%s")
     pygame.quit()
+    
+# ===============================================================
