@@ -133,3 +133,97 @@ class Shooting_Star(Rope):
             return False
         
 # =========================================================
+
+
+def main():
+    endFlag = False
+    Cat = Cat(400, 400)
+    time_elapsed = 0
+    
+    ropes = []
+    
+    while endFlag == False:
+        time_elapsed += 1
+        screen.fill((0,0,0))
+        
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                endFlag = True
+            else:
+                Cat.update(event)
+                
+        # プレイヤーを動かす
+        if Cat.move_right == True:
+            if Cat.x < 620:
+                Cat.x += CAT_VELOCITY
+        if Cat.move_left == True:
+            if Cat.x < 00:
+                Cat.x -= CAT_VELOCITY
+        if Cat.move_up == True:
+            if Cat.y < 00:
+                Cat.x -= CAT_VELOCITY
+        if Cat.move_down == True:
+            if Cat.x < 460:
+                Cat.x += CAT_VELOCITY
+                
+        # 線とドットのインスタンスを作る
+        if (time_elapsed == 20):
+            straight_rope = Straight_Rope(0,0,3)
+            ropes.append(straight_rope)
+        if (time_elapsed == 300):
+            straight_rope_horizontal = Straight_Rope_Horizontal(0,0,3)
+            ropes.append(straight_rope_horizontal)
+        if (time_elapsed == 600):
+            straight_rope = Straight_Rope(0,0,3)
+            ropes.append(straight_rope)
+        if (time_elapsed == 860):
+            straight_rope_horizontal = Straight_Rope_Horizontal(0,0,3)
+            ropes.append(straight_rope_horizontal)
+            
+        # ランダムなタイミングでランダムな種類のドットを発生させる
+        if(random.randrange(200) < 6):
+            shooting_star1 = Shooting_Star(random.randrange(640),0,random.randrange(5) + 5,random.randrange(10) - 5)
+            ropes.append(shooting_star1)
+            shooting_star2 = Shooting_Star(random.randrange(640),0,random.randrange(5) + 5,random.randrange(10) - 5)
+            ropes.append(shooting_star2)
+            shooting_star3 = Shooting_Star(random.randrange(640),0,random.randrange(5) + 5,random.randrange(10) - 5)
+            ropes.append(shooting_star3)
+            shooting_star4 = Shooting_Star(random.randrange(640),0,random.randrange(5) + 5,random.randrange(10) - 5)
+            ropes.append(shooting_star4)
+            
+        # 線とドットを動かす
+        for rope in ropes:
+            rope.update()
+            # 画面から出てしまったドットは削除
+            if (rope.x < 0 or rope.x > 640) or (rope.y < 0 or rope.y > 480):
+                ropes.remove(rope)
+            # 一定時間経つごとに、線の動きを早める
+            if (time_elapsed % 1000 == 0) and time_elapsed != 0:
+                rope.velocity += 1
+                
+        # プレイヤーがジャンプ中であればｍ当たり判定を行わない
+        if(Cat.immunity == True):
+            Cat.immunity_count += 1
+            if (Cat.immunity_count < CAT_JUMP):
+                screen.blit(Cat.immune_image, (Cat.x,Cat.y))
+            else:
+                Cat.immunity = False
+                Cat.immunity_count = 0
+                screen.blit(Cat.image, (Cat.x,Cat.y))
+        else:
+            screen.blit(Cat.image, (Cat.x,Cat.y))
+            for rope in ropes:
+                # 敵とぶつかった場合でも、前回ダメージを受けてから一定時間が経っていなければダメージを受けない
+                if(rope.judge(Cat) == True) and (Cat.life_lost_time + 30 < time_elapsed):
+                    Cat.life_lost_time = time_elapsed
+                    Cat.life -= 1
+                    if Cat.life == 0:
+                        endFlag = True
+                        
+        # プレイヤーのライフの数だけハートを表示する
+        for i in range(Cat.life - 1):
+            screen.blit(heart_image, (i * 30, 50))
+        pygame.display.update()
+    quit(time_elapsed)
+    
+# =========================================================
