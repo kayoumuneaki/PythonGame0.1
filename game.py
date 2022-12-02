@@ -114,3 +114,22 @@ class Straight_Rope_Horizontal(Rope):
             return True
         else:
             return False
+        
+# ==========================================================
+
+
+# ドット
+class Shooting_Star(Rope):
+    def update(self):
+        self.x += self.tilt
+        self.y += self.velocity
+        pygame.draw.circle(screen, COLORS[self.color], [self.x, self.y], 6)
+        
+    # プレイヤーとぶつかったか判定
+    def judge(self, Cat):
+        if((self.y > (Cat.y) and self.y < (Cat.y + 20)) and (self.x > (Cat.x) and self.x < (Cat.x + 20))):
+            return True
+        else:
+            return False
+        
+# =========================================================
