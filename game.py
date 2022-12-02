@@ -227,3 +227,19 @@ def main():
     quit(time_elapsed)
     
 # =========================================================
+
+
+# ゲームをやめるとき
+def quit(score):
+    print("your score:" + str(score))
+    # ハイスコアを取ってくる
+    data = np.loadtxt("score/score.tsv", dtype="string", delimiter=",")
+    highest_score = data[1]
+    print("highest score so far:" + highest_score)
+    if(score > int(highest_score)):
+        # もし今回のスコアがハイスコアよりも高ければ、データをtsvファイルに書き込む
+        save_data = np.array([str(datetime.datetime.today()), str(score)])
+        np.savetxt('score/score.tsv',save_data, delimiter=',', fmt="%s")
+    pygame.quit()
+    
+# ===============================================================
